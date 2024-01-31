@@ -1,45 +1,58 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>JavaScript &amp; jQuery - Chapter 6: Events - Event Listener and Event Object</title>
-    <link rel="stylesheet" href="css/c06.css" />
-  </head>
-  <body>
-    <div id="page">
+var op = document.getElementById("openPage");
+var tp = document.getElementById("tyPage");
+var submitButton = document.getElementById("submit");
+var signupButton = document.getElementById("signup");
+var smb = document.getElementById("submited");
+submitButton.addEventListener("click", function() {
+	event.preventDefault();
+    //alert("Hello! I am an alert box!!");   
+	op.style.display = "none";
+	tp.style.display = "block";
 	
-      <h1></h1>
-	  <div id="openPage">
-      <h2>New Account</h2>
-      <form ><!--method="post"  >  action="club.html"-->
-        
-        <label for="username">Create a username: </label>
-        <input type="text" id="username" /><div id="feedback"></div>
+	
+  });
+smb.addEventListener("click", function() {
+	event.preventDefault();
+    //alert("Hello! I am an alert box!!");   
+	window.location.href = "index.html";
+	
+	
+  });
 
-        <label for="password">Create a password: </label>
-        <input type="password" id="password" /><div id="feedback"></div>
-		
-		
-        <input type="submit" id = "submit" value="sign up" />
-        </div>
-      </form>
-	  
-	  
-	  <div id="tyPage">
-	  
-	  <h2>Thank You for signing up!</h2>
-	  <h2></h2>
-	  <h2></h2>
-	  <form><!-- method="post" href="index.html"> -->
-	  
-	  <input type = "submit" id = "submited" value= "Return to Home" />
-	  
-	  <section id="blackboard"></section>
-	  </form>
-	  
-	  </div>
-	  
-    
-	</div>
-    <script src="js/event-listener-with-event-object.js"></script>
-  </body>
-</html>
+
+
+
+
+function checkLength(e, minLength) {         // Declare function
+  var el, elMsg;                             // Declare variables
+  if (!e) {                                  // If event object doesn't exist
+    e = window.event;                        // Use IE fallback
+  }
+  el = e.target || e.srcElement;             // Get target of event
+  elMsg = el.nextSibling;                    // Get its next sibling
+
+  if (el.value.length < minLength) {         // If length is too short set msg
+    elMsg.innerHTML = 'Username must be ' + minLength + ' characters or more';
+	
+  } else {                                   // Otherwise
+    elMsg.innerHTML = '';                    // Clear message
+  }
+}
+
+var elUsername = document.getElementById('username');// Get username input
+if (elUsername.addEventListener) {           // If event listener supported
+  elUsername.addEventListener('blur', function(e) {  // On blur event
+    // NOTE: This function is checkLength() - not checkUsername()
+    checkLength(e, 5);                             // Call checkLength()
+	
+  }, false);                                       // Capture in bubble phase
+} else {                                           // Otherwise
+  elUsername.attachEvent('onblur', function(e) {   // IE fallback onblur
+    // NOTE: This function is checkLength() - not checkUsername()
+    checkLength(e, 5);                             // Call checkLength()
+  });
+}
+
+
+
+
